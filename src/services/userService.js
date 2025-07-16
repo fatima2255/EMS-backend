@@ -48,7 +48,7 @@ const registerUser = async ({ firstName, lastName, username, email, contact, pas
 
   // Return the required fields for the frontend
   return {
-    userId: user.userId?.toString(), // or user._id if you use _id
+    userId: user.userId?.toString(), 
     role: user.role,
   };
   
@@ -71,6 +71,9 @@ const loginUser = async ({ username, password }) => {
   return {
     accessToken: tokens.accessToken,
     refreshToken: tokens.refreshToken,
+    userId: user.userId?.toString(), 
+    role: user.role,
+    
   };
 };
 

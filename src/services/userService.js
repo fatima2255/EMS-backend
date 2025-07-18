@@ -1,6 +1,7 @@
 const bcrypt = require('bcrypt');
 const jwt = require('jsonwebtoken');
 const User = require('../models/userModel');
+const sendEmail = require('../utils/mail');
 
 // Generate JWT Tokens
 const generateTokens = (user) => {
@@ -46,6 +47,8 @@ const registerUser = async ({ firstName, lastName, username, email, contact, pas
 
   await user.save();
 
+  await sendAccountCredentials(user);
+
   // Return the required fields for the frontend
   return {
     userId: user.userId?.toString(), 
@@ -77,7 +80,33 @@ const loginUser = async ({ username, password }) => {
   };
 };
 
+
+// Send account credentials email
+const sendAccountCredentials = async (user) => {
+  const token = jwt.sign({ id: user._id }, process.env.ACCESS_TOKEN_SECRET, { expiresIn: '1h' });
+  const setPasswordLink = `${process.env.CLIENT_URL}/reset-password/${token}`;
+
+  const html = `
+    <div style="font-family: Arial, sans-serif; line-height: 1.5;">
+      <h2>Welcome, ${user.name}!</h2>
+      <p>Your account has been created on <strong>EMS</strong>.</p>
+      <p><strong>Username:</strong> ${user.username}</p>
+      <p>Please click the button below to set your password:</p>
+      <p>
+        <a href="${setPasswordLink}" style="background: #007BFF; color: white; padding: 10px 15px; text-decoration: none; border-radius: 5px;">Set Your Password</a>
+      </p>
+      <p>If the button above doesn’t work, use this link:</p>
+      <p><a href="${setPasswordLink}">${setPasswordLink}</a></p>
+      <p>This link will expire in 1 hour.</p>
+    </div>
+  `;
+
+  await sendEmail(user.email, 'Welcome to Employee Management System – Set Your Password', html);
+};
+
+
 module.exports = {
   registerUser,
   loginUser,
+  sendAccountCredentials,
 };

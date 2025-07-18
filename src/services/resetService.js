@@ -18,7 +18,7 @@ exports.handleForgotPassword = async (email) => {
     user.email,
     'Reset Your Password',
     `<p>You requested a password reset. Click the link below to reset your password:</p><p><a href="${link}">${link}</a></p><p>This link will expire in 15 minutes.</p>`
-  );
+  );sendEmail
 
   return 'Reset link sent to your registered email address';
 };

@@ -1,4 +1,5 @@
 const AttendanceLog = require('../models/attendanceLog');
+const User = require('../models/userModel');
 
 const createAttendanceLog = async (req, res) => {
   const { userId, activity } = req.body;
@@ -59,18 +60,58 @@ const createAttendanceLog = async (req, res) => {
   }
 };
 
-
-// Get all logs
+// all users
 const getAllLogs = async (req, res) => {
-  const logs = await AttendanceLog.find().sort({ activity_time: -1 });
-  res.json(logs);
+  try {
+    const users = await User.find().select('userId firstName lastName');
+    const userMap = new Map(users.map(user => [user.userId, user]));
+
+    const logs = await AttendanceLog.find().sort({ activity_time: -1 });
+
+    const enrichedLogs = logs.map(log => {
+      const user = userMap.get(log.userId);
+      const fullName = user ? `${user.firstName} ${user.lastName}` : 'Unknown';
+
+      return {
+        userId: log.userId,
+        fullName,
+        activity: log.activity,
+        activity_time: log.activity_time,
+      };
+    });
+
+    res.json(enrichedLogs);
+  } catch (err) {
+    console.error('Error fetching attendance logs:', err);
+    res.status(500).json({ message: 'Server Error' });
+  }
 };
+
+
 
 // Get logs by user ID
 const getUserLogs = async (req, res) => {
   const { userId } = req.params;
-  const logs = await AttendanceLog.find({ userId }).sort({ activity_time: -1 });
-  res.json(logs);
+
+  try {
+    const user = await User.findOne({ userId }).select('firstName lastName');
+    const logs = await AttendanceLog.find({ userId }).sort({ activity_time: -1 });
+
+    const fullName = user ? `${user.firstName} ${user.lastName}` : 'Unknown';
+
+    const enrichedLogs = logs.map(log => ({
+      _id: log._id,
+      userId: log.userId,
+      fullName,
+      activity: log.activity,
+      activity_time: log.activity_time,
+    }));
+
+    res.json(enrichedLogs);
+  } catch (err) {
+    console.error('Error fetching user logs:', err);
+    res.status(500).json({ message: 'Server Error' });
+  }
 };
 
 module.exports = {

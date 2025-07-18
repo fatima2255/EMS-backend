@@ -13,13 +13,9 @@ const addEmployeeInfo = async (req, res) => {
     }
 };
 
-// GET: Get all employees (admin/manager only)
+// GET: Get all employees 
 const getAllEmployees = async (req, res) => {
     try {
-        if (req.user.role !== 'admin' && req.user.role !== 'manager') {
-            return res.status(403).json({ message: 'Access denied.' });
-        }
-
         const employees = await employeeService.getAllEmployees();
         res.status(200).json(employees);
     } catch (error) {

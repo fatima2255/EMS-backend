@@ -25,21 +25,34 @@ const addEmployeeInfo = async ({ userId, address, designation, salaryPerMonth, m
 
 
 const getAllEmployees = async () => {
+  // Fetch all users and map them by userId
   const users = await User.find().select('-password');
-  const userMap = new Map(users.map(u => [u.userId, u]));
+  const userMap = new Map(users.map(user => [user.userId, user]));
 
+  // Fetch all employees
   const employees = await EmployeeInfo.find();
 
   const enrichedEmployees = employees.map(emp => {
+    const employeeUser = userMap.get(emp.userId);
+    const managerUser = userMap.get(emp.managerId);
+
     return {
-      ...emp._doc,
-      user: userMap.get(emp.userId),
-      manager: userMap.get(emp.managerId)
+      employeeId: emp.userId,
+      fullName: employeeUser ? `${employeeUser.firstName} ${employeeUser.lastName}` : 'N/A',
+      role: employeeUser ? `${employeeUser.role}` : 'N/A',
+      designation: emp.designation,
+      salary: emp.salaryPerMonth,
+      email: employeeUser?.email || 'N/A',
+      username: employeeUser?.username || 'N/A',
+      contact: employeeUser?.contact || 'N/A',
+      managerId: emp.managerId || 'N/A',
+      managerFullName: managerUser ? `${managerUser.firstName} ${managerUser.lastName}` : 'N/A',
     };
   });
 
   return enrichedEmployees;
 };
+
 
 module.exports = {
     addEmployeeInfo,

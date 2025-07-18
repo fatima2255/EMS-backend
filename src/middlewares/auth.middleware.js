@@ -3,6 +3,7 @@ const dotenv = require('dotenv');
 dotenv.config();
 
 const authMiddleware = (req, res, next) => {
+  // console.log('Auth middleware reached'); 
   const authHeader = req.headers['authorization'];
   if (!authHeader) {
     return res.status(401).json({ message: 'No token provided' });
@@ -15,6 +16,7 @@ const authMiddleware = (req, res, next) => {
 
   try {
     const decoded = jwt.verify(token, process.env.ACCESS_TOKEN_SECRET);
+    //console.log('Decoded token:', decoded);
     req.user = decoded; 
     next();
   } catch (err) {

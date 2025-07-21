@@ -8,7 +8,7 @@ module.exports = {
 
   employee_info:{
     add: ['admin'],
-    view: ['admin', 'manager'],
+    view: ['admin', 'manager', 'employee'],
     // update: all 3
     // delete only admin
   },
@@ -18,5 +18,19 @@ module.exports = {
     get_userid: ['admin'  , 'manager', 'employee'],
     get_all: ['admin'],
   },
+
+  projects: {
+    add: ['admin'],
+    view: ['admin', 'manager', 'employee'],
+    update: ['admin'],
+    delete: ['admin'],
+  },
+
+  tasks: {
+    add: ['admin', 'manager'],
+    view: ['admin', 'manager', 'employee'],
+    update: ['admin', 'manager'],
+    delete: ['admin', 'manager'],
+  }
   
 };

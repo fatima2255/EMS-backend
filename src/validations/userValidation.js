@@ -1,4 +1,3 @@
-// signup validations
 const Joi = require('joi');
 
 const signupSchema = Joi.object({

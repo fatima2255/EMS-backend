@@ -9,6 +9,8 @@ const userRoutes = require('./src/routes/userRoute');
 const resetRoutes = require('./src/routes/resetRoute');
 const employeeRoutes = require('./src/routes/employeeRoute');
 const attendanceRoutes = require('./src/routes/attendanceRoute');
+const projectRoutes = require('./src/routes/projectRoute');
+const taskRoutes = require('./src/routes/taskRoute');
 
 connectDB();
 
@@ -18,6 +20,8 @@ app.use('/api/auth', userRoutes); // User routes
 app.use('/api', resetRoutes); // Password reset routes
 app.use('/api/employees', employeeRoutes); // Employee routes
 app.use('/api/attendance', attendanceRoutes); // Attendance routes
+app.use('/api/projects', projectRoutes);
+app.use('/api/tasks', taskRoutes); // Task routes
 
 
 

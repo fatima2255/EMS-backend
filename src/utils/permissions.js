@@ -17,5 +17,6 @@ module.exports = {
     add: ['manager', 'employee'],
     get_userid: ['admin'  , 'manager', 'employee'],
     get_all: ['admin'],
-}
+  },
+  
 };

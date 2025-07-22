@@ -9,7 +9,7 @@ module.exports = {
   employee_info:{
     add: ['admin'],
     view: ['admin', 'manager', 'employee'],
-    // update: all 3
+    update: ['admin'],
     // delete only admin
   },
 

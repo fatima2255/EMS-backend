@@ -27,9 +27,9 @@ const deleteTask = async (taskId) => {
 };
 
 const updateStatus = async (task_id, status) => {
-  console.log("Inside service - task_id:", task_id, "status:", status);
+  // console.log("Inside service - task_id:", task_id, "status:", status);
   const updatedTask = await Task.findOneAndUpdate(
-    { task_id: parseInt(task_id) }, // 🔥 FIXED: Ensure you're querying by task_id
+    { task_id: parseInt(task_id) }, 
     {
       status,
       submission_date: new Date()
@@ -37,7 +37,7 @@ const updateStatus = async (task_id, status) => {
     { new: true }
   );
 
-  console.log("Updated Task:", updatedTask);
+  //console.log("Updated Task:", updatedTask);
   return updatedTask;
 };
 

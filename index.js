@@ -11,6 +11,7 @@ const employeeRoutes = require('./src/routes/employeeRoute');
 const attendanceRoutes = require('./src/routes/attendanceRoute');
 const projectRoutes = require('./src/routes/projectRoute');
 const taskRoutes = require('./src/routes/taskRoute');
+const reportRoute = require('./src/routes/reportRoute');
 
 connectDB();
 
@@ -20,9 +21,9 @@ app.use('/api/auth', userRoutes); // User routes
 app.use('/api', resetRoutes); // Password reset routes
 app.use('/api/employees', employeeRoutes); // Employee routes
 app.use('/api/attendance', attendanceRoutes); // Attendance routes
-app.use('/api/projects', projectRoutes);
+app.use('/api/projects', projectRoutes); // project routes
 app.use('/api/tasks', taskRoutes); // Task routes
-
+app.use('/api/reports', reportRoute); // Report route
 
 
 // Start server

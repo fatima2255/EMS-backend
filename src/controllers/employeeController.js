@@ -23,8 +23,28 @@ const getAllEmployees = async (req, res) => {
     }
 };
 
+const updateEmployeeInfo = async (req, res) => {
+    try {
+        const userId = req.params.userId;
+        const data = req.body;
+
+        const result = await employeeService.updateEmployeeInfo(userId, data);
+
+        res.status(200).json({
+            message: 'Employee and user info updated successfully',
+            user: result.user,
+            employee: result.employee
+        });
+    } catch (error) {
+        res.status(error.status || 500).json({ message: error.message || 'Server error' });
+    }
+};
+
+
 
 module.exports = {
     addEmployeeInfo,
-    getAllEmployees
+    getAllEmployees,
+    updateEmployeeInfo,
+
 };

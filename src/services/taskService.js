@@ -9,7 +9,7 @@ const createTask = async (data) => {
 
 
 const getAllTasks = async () => {
-  return await Task.find().sort({ due_date: -1 });
+  return await Task.find().sort({ task_id: 1 });
 };
 
 

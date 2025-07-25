@@ -31,6 +31,9 @@ module.exports = {
     view: ['admin', 'manager', 'employee'],
     update: ['admin', 'manager'],
     delete: ['admin', 'manager'],
-  }
+  },
+  reports: {
+    generate: ['admin'],
+  },
   
 };

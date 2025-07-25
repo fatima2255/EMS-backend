@@ -61,12 +61,12 @@ const registerUser = async ({ firstName, lastName, username, email, contact, pas
 const loginUser = async ({ username, password }) => {
   const user = await User.findOne({ username });
   if (!user) {
-    throw new Error('Invalid credentials');
+    throw new Error('Invalid username');
   }
 
   const isMatch = await bcrypt.compare(password, user.password);
   if (!isMatch) {
-    throw new Error('Invalid credentials');
+    throw new Error('Invalid password');
   }
 
   const tokens = generateTokens(user);

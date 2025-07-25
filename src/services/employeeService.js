@@ -58,10 +58,11 @@ const updateEmployeeInfo = async (userId, data) => {
     const numericUserId = Number(userId);
 
     // Update Users table
-    const { email, username, contact } = data;
+    const { email, username, contact, role} = data;
     const userUpdate = {};
     if (email) userUpdate.email = email;
-    if (username) userUpdate.username = username;
+    //if (username) userUpdate.username = username;
+    if (role) userUpdate.role = role;
     if (contact) userUpdate.contact = contact;
 
     const updatedUser = await User.findOneAndUpdate(

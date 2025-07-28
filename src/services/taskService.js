@@ -27,17 +27,20 @@ const deleteTask = async (taskId) => {
 };
 
 const updateStatus = async (task_id, status) => {
-  // console.log("Inside service - task_id:", task_id, "status:", status);
+  const updateFields = { status };
+
+  if (status === 'completed') {
+    updateFields.submission_date = new Date();
+  } else {
+    updateFields.submission_date = null;
+  }
+
   const updatedTask = await Task.findOneAndUpdate(
-    { task_id: parseInt(task_id) }, 
-    {
-      status,
-      submission_date: new Date()
-    },
+    { task_id: parseInt(task_id) },
+    updateFields,
     { new: true }
   );
 
-  //console.log("Updated Task:", updatedTask);
   return updatedTask;
 };
 

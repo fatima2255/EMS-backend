@@ -88,7 +88,7 @@ const sendAccountCredentials = async (user) => {
 
   const html = `
     <div style="font-family: Arial, sans-serif; line-height: 1.5;">
-      <h2>Welcome, ${user.name}!</h2>
+      <h2>Welcome, ${user.firstName}!</h2>
       <p>Your account has been created on <strong>EMS</strong>.</p>
       <p><strong>Username:</strong> ${user.username}</p>
       <p>Please click the button below to set your password:</p>
